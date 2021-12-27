@@ -119,101 +119,6 @@
         </table>
       </div>                                           
     </form>    
-    <!-- 
-        <div class="col-md-1">
-          <label for="Department">Grade</label>
-        </div>
-        <div class="col-md-3">
-          <select
-            id="Department"
-            v-on:change="fetchClasses(Student_Class.GroupNo,Student_Class.SchoolNo,Student_Class.SectionNo,Student_Class.DepartmentNo,Student_Class.GradeNo);fetchAccepted_Student(Student_Class.SY,Student_Class.GroupNo,Student_Class.SchoolNo,Student_Class.SectionNo,Student_Class.DepartmentNo,Student_Class.GradeNo)"
-            class="form-control input"
-            v-model="Student_Class.GradeNo"
-          >
-            <option
-              v-for="grade in Grades"
-              v-bind:value="grade.GradeNo"
-              :key="grade.GradeNo"
-            >{{grade.Grade}}</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-md-4">
-          <div class="input-group">
-            <span class="input-group-btn">
-              <button
-                class="btn btn-info"
-                type="button"
-                v-on:click.prevent="GenerateID()"
-              >Generate ID</button>
-            </span>
-            <input
-              type="text"
-              class="form-control"
-              v-model="Student_Class.StudentNo"
-              placeholder="ID"
-              disabled
-            />
-          </div>
-        </div>
-        <div class="col-md-1">
-          <label for="Department">Class</label>
-        </div>
-        <div class="col-md-3">
-          <select
-            id="Class"
-            class="form-control input"
-            v-on:change="CheckID()"
-            v-model="Student_Class.ClassNo"
-          >
-            <option
-              v-for="MyClass in Classes"
-              v-bind:value="MyClass.ClassNo"
-              :key="MyClass.ClassNo"
-            >{{MyClass.ClasseName}}</option>
-          </select>
-        </div>
-      </div>
-
-      <div v-if="ShowAlert" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" v-on:click="ShowAlert=false" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Student Data Saved successfully</strong>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-md-12">
-          <button
-            v-on:click.prevent="Savestudentclass()"
-            class="btn btn-primary btn-lg"
-            :disabled="Status"
-          >{{operation}}</button>
-        </div>
-      </div>
-
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>English Name</th>
-            <th>Birth Date</th>
-            <th>Form Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(student, index) in Students" :key="index">
-            <td>{{index+1}}</td>
-            <td>{{student.Name}}</td>
-            <td>{{student.Birth_Date}}</td>
-            <td>{{student.ApllicationDate}}</td>
-            <td class="btn btn-danger" v-on:click.prevent="Show_Student(student)">Assign</td>
-          </tr>
-        </tbody>
-      </table>
-    </form> -->
   </div>
 </template>
 
@@ -228,7 +133,7 @@ export default {
     return {
       SY: "",
       operation: "Save",
-      Status: true,
+      Status: false,
       Form_ID: 0,
       Student_Class: {
         SY: "",
@@ -248,6 +153,9 @@ export default {
         Student_Email: "",
         Nationality: "",
         Gender: "",
+        Address: "",
+        ContactPerson:"",
+        ContactPersonMob: ""
       },
       Groups: [],
       Schools: [],
@@ -289,15 +197,18 @@ export default {
         DepartmentNo: this.Student_Class.DepartmentNo,
         GradeNo: this.Student_Class.GradeNo,
         ClassNo: this.Student_Class.ClassNo,
-        BranchNo: BranchNo,
+        Address: this.Student.Address,
+        ContactPerson: this.Student.ContactPerson,
+        ContactPersonMob:this.Student.ContactPersonMob
       };
-
+      console.log(Student_info)
         axios
           .post(
             "http://" + server.IP + ":" + server.port + "/addstudentinfo",
             Student_info
           )
-          .then(() => {
+          .then((data) => {
+            if (parseInt(data.data.MSG) > 0 ) {
             let new_Student = {
               SY: this.Student_Class.SY,
               GroupNo: this.Student_Class.GroupNo,
@@ -351,6 +262,7 @@ export default {
                     });              
                   });
               });
+            }
           });
       
     },
@@ -394,14 +306,16 @@ export default {
 
     Show_Student(NewStudent) {
       this.Student.Student_name = NewStudent.Name;
-      this.Student_Class.RegDate =
-        this.Student_Class.SY.substring(0, 4) + "/09/01";
+      this.Student_Class.RegDate = this.Student_Class.SY.substring(0, 4) + "/09/01";
       this.Student.Birth_date = NewStudent.Birth_Date;
       this.Student.Student_Email = NewStudent.Email;
       this.Student.Gender = NewStudent.Gender;
       this.Student.Nationality = NewStudent.FatherNationality;
+      this.Student.ContactPerson = NewStudent.MotherName;
+      this.Student.ContactPersonMob = NewStudent.MotherMobile;
+      this.Student.Address = NewStudent.Address
       this.Form_ID = NewStudent.ID;
-      console.log(NewStudent.ID);
+      console.log("Student:",this.Student);
     },
 
     GenerateID() {

@@ -110,93 +110,6 @@
         </tbody>
       </table>
     </div>                
-    <!-- <div class="col-md-1">          
-        <label for ="school">School</label>
-      </div>
-      <div class="col-md-3">
-        <select id ="school" v-on:change="fetchSection(Class.GroupNo,Class.SchoolNo)" class="form-control input" v-model = "Class.SchoolNo">
-          <option v-for="school in Schools" v-bind:value="school.SchoolNo"> {{school.SchoolName}} </option>
-        </select>
-      </div>
-      <div class="col-md-1">          
-        <label for ="section">Section</label>
-      </div>
-      <div class="col-md-3">
-        <select id ="section" v-on:change="fetchDept(Class.GroupNo,Class.SchoolNo,Class.SectionNo)" class="form-control input" v-model = "Class.SectionNo">
-          <option v-for="Section in Sections" v-bind:value="Section.SectionNo"> {{Section.SectionName}} </option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-1">   
-        <label for ="Department">Dept.</label>
-      </div>
-      <div class="col-md-3">
-        <select id ="Department" v-on:change="fetchGrades(Class.GroupNo,Class.SchoolNo,Class.SectionNo,Class.DepartmentNo)" class="form-control input" v-model = "Class.DepartmentNo">
-          <option v-for="dept in Depts" v-bind:value="dept.DepartmentNo"> {{dept.DepartmentName}} </option>
-        </select>
-      </div>
-      <div class="col-md-1">   
-        <label for ="Department">Grade</label>
-      </div>
-      <div class="col-md-3">
-        <select id ="Department" v-on:change="fetchClasses(Class.GroupNo,Class.SchoolNo,Class.SectionNo,Class.DepartmentNo,Class.GradeNo)" class="form-control input" v-model = "Class.GradeNo">
-          <option v-for="grade in Grades" v-bind:value="grade.GradeNo"> {{grade.Grade}} </option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-md-2">
-        <div class="input-group">
-          <span class="input-group-addon">Class</span>
-          <input type="text" class="form-control" v-model = "Class.ClasseName" placeholder="Name/No.">
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="input-group">
-          <span class="input-group-addon">Building</span>
-          <input type="text" class="form-control" v-model = "Class.BuildingName" placeholder="Building Name">
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group">
-          <span class="input-group-addon">Max. Students</span>
-          <input type="number" class="form-control" v-model = "Class.MaxStudents" placeholder="">
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group">
-          <span class="input-group-addon">Min. Students</span>
-          <input type="number" class="form-control" v-model = "Class.MinStudents" placeholder="">
-        </div>
-      </div>      
-    </div>
-    <div class="form-group row">
-      <div class="col-md-12">
-       <button v-on:click.prevent="Saveclass()" class="btn btn-primary btn-lg">{{operation}}</button>
-      </div>
-    </div>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Class</th>
-          <th>Building</th>          
-          <th>MAX.</th>
-          <th>MIN.</th>          
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="classinfo in Classes">
-          <td>{{classinfo.ClasseName}}</td>
-          <td>{{classinfo.BuildingName}}</td>
-          <td>{{classinfo.MaxStudents}}</td>
-          <td>{{classinfo.MinStudents}}</td>
-          <td class="btn btn-warning " v-on:click.prevent="showEditClass(classinfo)">Update </td>
-          <td class="btn btn-danger">Delete </td>
-          
-        </tr>
-      </tbody>
-    </table> -->
   </form>
   </div>
 </template>
@@ -219,8 +132,8 @@ export default {
         ClassNo: 0,
         ClasseName: "",
         BuildingName: "",
-        MaxStudents: "",
-        MinStudents: ""
+        MaxStudents: 0,
+        MinStudents: 0
       },
       Groups: [],
       Schools: [],
