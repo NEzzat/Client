@@ -201,7 +201,6 @@ export default {
         ContactPerson: this.Student.ContactPerson,
         ContactPersonMob:this.Student.ContactPersonMob
       };
-      console.log(Student_info)
         axios
           .post(
             "http://" + server.IP + ":" + server.port + "/addstudentinfo",
@@ -209,18 +208,19 @@ export default {
           )
           .then((data) => {
             if (parseInt(data.data.MSG) > 0 ) {
-            let new_Student = {
-              SY: this.Student_Class.SY,
-              GroupNo: this.Student_Class.GroupNo,
-              SchoolNo: this.Student_Class.SchoolNo,
-              SectionNo: this.Student_Class.SectionNo,
-              DepartmentNo: this.Student_Class.DepartmentNo,
-              GradeNo: this.Student_Class.GradeNo,
-              ClassNo: this.Student_Class.ClassNo,
-              StudentNo: this.Student_Class.StudentNo,
-              RegDate: this.Student_Class.RegDate,
-            };
-            axios
+              let new_Student = {
+                SY: this.Student_Class.SY,
+                GroupNo: this.Student_Class.GroupNo,
+                SchoolNo: this.Student_Class.SchoolNo,
+                SectionNo: this.Student_Class.SectionNo,
+                DepartmentNo: this.Student_Class.DepartmentNo,
+                GradeNo: this.Student_Class.GradeNo,
+                ClassNo: this.Student_Class.ClassNo,
+                StudentNo: this.Student_Class.StudentNo,
+                RegDate: this.Student_Class.RegDate,
+                partner_id: data.data.MSG
+              };
+              axios
               .post(
                 "http://" + server.IP + ":" + server.port + "/addstudentclass",
                 new_Student
